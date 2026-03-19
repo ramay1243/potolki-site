@@ -26,6 +26,7 @@
         }
 
         .login-container {
+            display: none; /* вход больше не нужен, сразу показываем панель */
             background: #1e2f3b;
             border-radius: 48px;
             padding: 50px 40px;
@@ -307,6 +308,40 @@
             background: #5a3e3e;
         }
 
+        .sync-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .sync-btn {
+            background: #2b4f6e;
+            color: #e4f1ff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.2s;
+        }
+
+        .sync-btn:hover {
+            background: #396687;
+        }
+
+        .sync-hint {
+            font-size: 0.8rem;
+            color: #8fb3ce;
+        }
+
+        #importFileInput {
+            display: none;
+        }
+
         .visitor-badge {
             background: #2b4f6e;
             padding: 8px 16px;
@@ -396,8 +431,22 @@
         <div class="visitor-badge">
             <i class="fas fa-eye"></i> Посещений сегодня: <span id="activeToday">0</span>
         </div>
-        <button class="reset-data" onclick="resetAllData()"><i class="fas fa-undo-alt"></i> Сбросить все данные</button>
+        <div class="sync-buttons">
+            <button class="sync-btn" onclick="exportApplications()">
+                <i class="fas fa-download"></i> Выгрузить заявки
+            </button>
+            <button class="sync-btn" onclick="document.getElementById('importFileInput').click()">
+                <i class="fas fa-upload"></i> Загрузить заявки
+            </button>
+            <button class="reset-data" onclick="resetAllData()">
+                <i class="fas fa-undo-alt"></i> Сбросить все данные
+            </button>
+            <div class="sync-hint">
+                Чтобы увидеть заявки с телефона на ПК — выгрузите файл на телефоне и загрузите его здесь.
+            </div>
+        </div>
     </div>
+    <input type="file" id="importFileInput" accept="application/json" />
 </div>
 
 <script>
@@ -415,8 +464,7 @@
         
         const testNames = [
             'Смирнова Елена',
-            'Иванов Петр', 
-            'Иванов Петр Сергеевич',
+            'Иванов Петр Сергеевич', 
             'Равиль Хакимов',
             'цпкфе64ц',
             'руфкпфер64',
@@ -475,17 +523,12 @@
         document.getElementById('activeToday').innerText = stats.todayVisits || 0;
     }
 
-    // Проверка сессии
+    // Старт сразу в админ-панели (без ввода логина/пароля)
     window.onload = function() {
         initVisitorStats();
         removeTestData();
-        
-        if (sessionStorage.getItem('admin_logged') === 'true') {
-            showAdminPanel();
-        } else {
-            document.getElementById('loginForm').style.display = 'flex';
-            document.getElementById('adminPanel').style.display = 'none';
-        }
+        sessionStorage.setItem('admin_logged', 'true');
+        showAdminPanel();
         loadApplications();
         loadVisitorStats();
     };
@@ -514,32 +557,36 @@
 
     // Выход
     function logout() {
-        sessionStorage.removeItem('admin_logged');
-        document.getElementById('loginForm').style.display = 'flex';
-        document.getElementById('adminPanel').style.display = 'none';
-        document.getElementById('username').value = 'admin';
-        document.getElementById('password').value = 'potolok2024';
+        // вместо выхода просто возвращаемся на главный сайт
+        window.location.href = 'index.html';
     }
 
-    // Загрузка ТОЛЬКО РЕАЛЬНЫХ заявок
+    // ===== ИСПРАВЛЕННАЯ ЗАГРУЗКА ЗАЯВОК (БЕЗ ОШИБКИ "НЕ ЧИСЛО") =====
     function loadApplications() {
         let apps = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
         
+        // Обновляем статистику заявок
         document.getElementById('totalApps').innerText = apps.length;
+
         let newCount = apps.filter(app => !app.processed).length;
         document.getElementById('newApps').innerText = newCount;
 
-        // Расчет среднего чека
+        // ПРАВИЛЬНЫЙ РАСЧЕТ СРЕДНЕГО ЧЕКА (с защитой от NaN)
         if (apps.length > 0) {
             let sum = 0;
             let validPrices = 0;
             
             apps.forEach(app => {
+                // Если цена есть и она не пустая
                 if (app.price) {
+                    // Очищаем цену от всех символов, кроме цифр
                     let priceStr = String(app.price);
                     let cleanPrice = priceStr.replace(/[^\d]/g, '');
+                    
+                    // Преобразуем в число, если получилось - используем
                     let price = parseInt(cleanPrice);
                     
+                    // Проверяем, что это действительно число и оно больше 0
                     if (!isNaN(price) && price > 0) {
                         sum += price;
                         validPrices++;
@@ -547,6 +594,7 @@
                 }
             });
             
+            // Если есть валидные цены - считаем среднее
             if (validPrices > 0) {
                 let avg = Math.round(sum / validPrices);
                 document.getElementById('avgPrice').innerText = avg.toLocaleString('ru-RU');
@@ -564,6 +612,7 @@
             return;
         }
 
+        // Сортировка по дате
         apps.sort((a, b) => {
             if (a.date && b.date) return new Date(b.date) - new Date(a.date);
             return 0;
@@ -581,8 +630,10 @@
             let statusClass = app.processed ? 'callback-done' : '';
             let statusText = app.processed ? 'Обработано' : 'Новая';
             
+            // Безопасное форматирование цены (с защитой от undefined)
             let displayPrice = '—';
             if (app.price) {
+                // Очищаем от символов и проверяем
                 let cleanPrice = String(app.price).replace(/[^\d]/g, '');
                 let priceNum = parseInt(cleanPrice);
                 if (!isNaN(priceNum) && priceNum > 0) {
@@ -638,6 +689,45 @@
             alert('Все данные удалены');
         }
     }
+
+    // Выгрузка заявок в файл (для переноса между устройствами)
+    function exportApplications() {
+        let apps = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        const blob = new Blob([JSON.stringify(apps, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'ceiling_applications.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    // Загрузка заявок из файла (например, выгруженного с телефона)
+    document.getElementById('importFileInput').addEventListener('change', function (e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function (event) {
+            try {
+                const data = JSON.parse(event.target.result);
+                if (!Array.isArray(data)) {
+                    alert('Неверный формат файла заявок');
+                    return;
+                }
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+                loadApplications();
+                loadVisitorStats();
+                alert('Заявки успешно загружены');
+            } catch (err) {
+                alert('Ошибка чтения файла заявок');
+            }
+        };
+        reader.readAsText(file, 'utf-8');
+        // сбрасываем значение, чтобы можно было выбрать тот же файл повторно
+        e.target.value = '';
+    });
 
     // Обновление каждые 10 секунд
     setInterval(() => {
