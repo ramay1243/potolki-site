@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тимур потолок | Натяжные потолки в Казани</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: #f4f7fc;
+            color: #1e2b37;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #e0e7ef; }
+        ::-webkit-scrollbar-thumb { background: #2b4f6e; border-radius: 8px; }
+
+        /* навигация */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 20px rgba(0,20,30,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(43,79,110,0.1);
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.8rem;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #1e3b4f, #3a6b8c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .logo span { color: #d4a259; -webkit-text-fill-color: #d4a259; }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            font-weight: 500;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #1e2b37;
+            transition: 0.2s;
+            font-size: 1.05rem;
+            position: relative;
+        }
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0%;
+            height: 2.5px;
+            background: #d4a259;
+            transition: 0.3s;
+        }
+        .nav-links a:hover:after { width: 100%; }
+        .nav-links a:hover { color: #2b4f6e; }
+
+        .city-tag {
+            background: #eef3f9;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+        .city-tag i { color: #d4a259; margin-right: 6px; }
+
+        /* hero */
+        .hero {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            padding: 40px 5% 60px;
+            background: linear-gradient(145deg, #ffffff 0%, #f2f8ff 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero:before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(212,162,89,0.05) 0%, transparent 70%);
+            top: -200px;
+            right: -100px;
+            border-radius: 50%;
+            z-index: 0;
+        }
+        .hero-content {
+            flex: 1 1 400px;
+            z-index: 2;
+            animation: fadeUp 1s ease;
+        }
+        .hero-content h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            background: linear-gradient(145deg, #1b3b4e, #2b5a7a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+        .hero-content p {
+            font-size: 1.2rem;
+            color: #3e5466;
+            max-width: 500px;
+            margin-bottom: 30px;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: #d4a25920;
+            backdrop-filter: blur(4px);
+            padding: 12px 28px;
+            border-radius: 60px;
+            color: #2b4f6e;
+            font-weight: 600;
+            border: 1px solid #d4a25940;
+        }
+        .hero-image {
+            flex: 1 1 400px;
+            text-align: center;
+            z-index: 2;
+            animation: float 6s infinite alternate ease-in-out;
+        }
+        .hero-image i {
+            font-size: 16rem;
+            color: #d4a259;
+            opacity: 0.7;
+            filter: drop-shadow(0 20px 30px rgba(0,40,60,0.15));
+        }
+
+        @keyframes fadeUp { 
+            0% { opacity: 0; transform: translateY(30px); } 
+            100% { opacity: 1; transform: translateY(0); } 
+        }
+        @keyframes float { 
+            0% { transform: translateY(0px); } 
+            100% { transform: translateY(-20px); } 
+        }
+
+        .section {
+            padding: 80px 5%;
+        }
+
+        .section-title {
+            font-size: 2.4rem;
+            font-weight: 600;
+            color: #1e2b37;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 70px;
+            height: 4px;
+            background: #d4a259;
+            margin-top: 10px;
+            border-radius: 4px;
+        }
+
+        /* каталог (карточки) */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .feature-card {
+            background: white;
+            padding: 30px 25px;
+            border-radius: 32px;
+            box-shadow: 0 20px 35px -8px rgba(0,35,65,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #ffffff80;
+            backdrop-filter: blur(4px);
+        }
+        .feature-card:hover { transform: translateY(-8px); box-shadow: 0 30px 45px -10px rgba(0,55,95,0.2); }
+        .feature-card i { font-size: 2.5rem; color: #d4a259; margin-bottom: 20px; }
+        .feature-card h3 { font-size: 1.5rem; margin-bottom: 10px; }
+
+        /* КАРУСЕЛЬ НАШИ РАБОТЫ */
+        .portfolio-section {
+            background: #e8f0f9;
+        }
+
+        .carousel-container {
+            position: relative;
+            max-width: 1200px;
+            margin: 40px auto 0;
+            padding: 0 50px;
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: 25px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE */
+            padding: 10px 0 20px;
+        }
+
+        .carousel-track::-webkit-scrollbar {
+            display: none; /* Chrome/Safari */
+        }
+
+        .carousel-slide {
+            min-width: 300px;
+            height: 250px;
+            background: #cfdeee;
+            border-radius: 32px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 20px 30px -8px #1e3b4f40;
+            transition: 0.3s;
+            border: 1px solid white;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .carousel-slide:hover {
+            transform: scale(1.02);
+            box-shadow: 0 25px 40px -5px #1e3b4f70;
+        }
+
+        /* плейсхолдер для фото (потом замените на <img>) */
+        .slide-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, #b6d2e8, #9bb9d4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #1e3f55;
+            font-weight: 600;
+            gap: 10px;
+        }
+
+        .slide-placeholder i {
+            font-size: 4rem;
+            color: #ffffff90;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            background: white;
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 8px 20px #0b2a3c30;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #1e3b4f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+            z-index: 10;
+        }
+
+        .carousel-btn:hover {
+            background: #d4a259;
+            color: white;
+        }
+
+        .carousel-btn.prev {
+            left: 0;
+        }
+
+        .carousel-btn.next {
+            right: 0;
+        }
+
+        /* подпись под фото */
+        .slide-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(5px);
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: 500;
+            border-bottom-left-radius: 32px;
+            border-bottom-right-radius: 32px;
+        }
+
+        /* калькулятор */
+        .calculator-panel {
+            background: white;
+            border-radius: 42px;
+            padding: 40px;
+            box-shadow: 0 30px 50px -20px #0b2a3c30;
+            max-width: 900px;
+            margin: 0 auto;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.7);
+        }
+        .calc-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        .calc-inputs {
+            flex: 2;
+            min-width: 280px;
+        }
+        .calc-result {
+            flex: 1;
+            background: #f0f6fe;
+            border-radius: 32px;
+            padding: 30px 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            box-shadow: inset 0 2px 8px #ffffff, 0 10px 20px #cadef0;
+        }
+        .input-group {
+            margin-bottom: 25px;
+        }
+        .input-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #1e3f55;
+        }
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 16px 22px;
+            border: 2px solid #e2ecf5;
+            border-radius: 40px;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.2s;
+            background: white;
+        }
+        .input-group input:focus, .input-group select:focus {
+            border-color: #d4a259;
+            box-shadow: 0 0 0 4px #d4a25920;
+        }
+        .price-tag {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #1e3b4f;
+            line-height: 1;
+            margin: 10px 0;
+        }
+        .price-tag small {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: #647e94;
+        }
+
+        .order-btn {
+            background: #d4a259;
+            border: none;
+            color: white;
+            padding: 16px 36px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 20px;
+            box-shadow: 0 10px 20px #d4a25960;
+            width: 100%;
+        }
+        .order-btn:hover { background: #b8873e; transform: scale(1.02); }
+
+        /* форма заявки */
+        .request-form {
+            background: white;
+            border-radius: 42px;
+            padding: 40px;
+            max-width: 600px;
+            margin: 30px auto 0;
+            box-shadow: 0 30px 40px -20px #0b2a3c40;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 18px 24px;
+            border: 2px solid #deecf5;
+            border-radius: 50px;
+            font-size: 1rem;
+        }
+        .submit-btn {
+            background: #2b4f6e;
+            color: white;
+            font-weight: 700;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 8px 18px #1e3b4f70;
+        }
+        .submit-btn:hover { background: #1e3b4f; }
+
+        /* футер */
+        .footer {
+            background: #10222e;
+            color: #b0c9dd;
+            padding: 30px 5%;
+            text-align: center;
+        }
+
+        /* модалка успеха */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #10222e80;
+            backdrop-filter: blur(10px);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 60px;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 40px 70px #04121c;
+        }
+        .modal-content i { font-size: 4rem; color: #3fb58b; margin-bottom: 20px; }
+
+        /* ссылки-страницы (для структуры) */
+        .page-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            background: #ecf3fa;
+            padding: 16px;
+            border-radius: 80px;
+            margin: 30px auto 0;
+            width: fit-content;
+        }
+        .page-link {
+            background: white;
+            padding: 10px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            color: #1e2b37;
+            text-decoration: none;
+            transition: 0.2s;
+            border: 1px solid transparent;
+        }
+        .page-link:hover { border-color: #d4a259; background: #fdfdfd; }
+
+        @media (max-width: 700px) {
+            .navbar { flex-wrap: wrap; gap: 15px; }
+            .nav-links { gap: 20px; }
+            .hero-content h1 { font-size: 2.5rem; }
+            .carousel-slide { min-width: 250px; height: 200px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Шапка -->
+<nav class="navbar">
+    <div class="logo">Тимур<span>потолок</span></div>
+    <div class="nav-links">
+        <a href="#home">Главная</a>
+        <a href="#catalog">Каталог</a>
+        <a href="#portfolio">Наши работы</a>
+        <a href="#calc">Калькулятор</a>
+        <a href="#contact">Контакты</a>
+    </div>
+    <div class="city-tag"><i class="fas fa-map-pin"></i> Казань</div>
+</nav>
+
+
+
+<!-- Главная -->
+<section id="home" class="hero">
+    <div class="hero-content">
+        <h1>Идеальные натяжные потолки в Казани</h1>
+        <p>Безупречный дизайн, европейские материалы, установка за 1 день. Рассчитайте стоимость сразу.</p>
+        <div class="hero-badge"><i class="fas fa-star"></i> Более 100 довольных семей</div>
+    </div>
+    <div class="hero-image">
+        <i class="fas fa-border-all"></i>
+    </div>
+</section>
+
+<!-- Каталог -->
+<section id="catalog" class="section">
+    <h2 class="section-title">Каталог покрытий</h2>
+    <div class="features-grid">
+        <div class="feature-card"><i class="fas fa-moon"></i><h3>Матовые</h3><p>Классика без бликов</p></div>
+        <div class="feature-card"><i class="fas fa-star"></i><h3>Глянцевые</h3><p>Глубокий блеск</p></div>
+        <div class="feature-card"><i class="fas fa-cloud-sun"></i><h3>Сатиновые</h3><p>Перламутровый эффект</p></div>
+        <div class="feature-card"><i class="fas fa-palette"></i><h3>Тканевые</h3><p>Экологичность</p></div>
+    </div>
+</section>
+
+<!-- НАШИ РАБОТЫ (карусель) -->
+<section id="portfolio" class="section portfolio-section">
+    <h2 class="section-title">Наши работы</h2>    
+    <div class="carousel-container">
+        <button class="carousel-btn prev" onclick="scrollCarousel(-1)"><i class="fas fa-chevron-left"></i></button>
+        <button class="carousel-btn next" onclick="scrollCarousel(1)"><i class="fas fa-chevron-right"></i></button>
+        
+        <div class="carousel-track" id="carouselTrack">
+            <!-- Слайд 1 (позже замените на <img>) -->
+            <div class="carousel-slide">
+                <div class="slide-placeholder">
+                    <i class="fas fa-image"></i>
+                    <span>Глянец, ул. Павлюхина</span>
+                </div>
+                <div class="slide-caption">2-уровневый потолок</div>
+            </div>
+            <!-- Слайд 2 -->
+            <div class="carousel-slide">
+                <div class="slide-placeholder">
+                    <i class="fas fa-image"></i>
+                    <span>Матовый, пр. Победы</span>
+                </div>
+                <div class="slide-caption">с подсветкой</div>
+            </div>
+            <!-- Слайд 3 -->
+            <div class="carousel-slide">
+                <div class="slide-placeholder">
+                    <i class="fas fa-image"></i>
+                    <span>Тканевый, ул. Четаева</span>
+                </div>
+                <div class="slide-caption">фотопечать</div>
+            </div>
+            <!-- Слайд 4 -->
+            <div class="carousel-slide">
+                <div class="slide-placeholder">
+                    <i class="fas fa-image"></i>
+                    <span>Сатин, ул. Достоевского</span>
+                </div>
+                <div class="slide-caption">парящий</div>
+            </div>
+            <!-- Слайд 5 -->
+            <div class="carousel-slide">
+                <div class="slide-placeholder">
+                    <i class="fas fa-image"></i>
+                    <span>Глянец, м. Горки</span>
+                </div>
+                <div class="slide-caption">звездное небо</div>
+            </div>
+            <!-- Слайд 6 (добавьте сколько нужно) -->
+            <div class="carousel-slide">
+                <div class="slide-placeholder">
+                    <i class="fas fa-image"></i>
+                    <span>Матовый, Сити Центр</span>
+                </div>
+                <div class="slide-caption">скрытый карниз</div>
+            </div>
+        </div>
+    </div>
+    <p style="text-align: center; margin-top: 30px; color: #3b637a;">
+        <i class="fas fa-arrow-left"></i> листайте влево-вправо <i class="fas fa-arrow-right"></i>
+    </p>
+</section>
+
+<!-- Калькулятор -->
+<section id="calc" class="section">
+    <h2 class="section-title">Калькулятор стоимости</h2>
+    <div class="calculator-panel">
+        <div class="calc-grid">
+            <div class="calc-inputs">
+                <div class="input-group">
+                    <label><i class="fas fa-vector-square"></i> Площадь (м²)</label>
+                    <input type="number" id="area" value="20" min="5" max="200" step="1">
+                </div>
+                <div class="input-group">
+                    <label><i class="fas fa-water"></i> Тип полотна</label>
+                    <select id="material">
+                        <option value="500">Матовый ПВХ (500 ₽/м²)</option>
+                        <option value="700">Глянцевый ПВХ (700 ₽/м²)</option>
+                        <option value="850">Сатиновый (850 ₽/м²)</option>
+                        <option value="1200">Тканевый (1200 ₽/м²)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label><i class="fas fa-lightbulb"></i> Дополнительно</label>
+                    <select id="extra">
+                        <option value="0">Без люков</option>
+                        <option value="1500">2 люка +1500 ₽</option>
+                        <option value="2500">4 люка +2500 ₽</option>
+                    </select>
+                </div>
+            </div>
+            <div class="calc-result">
+                <h3>Предварительная цена</h3>
+                <div class="price-tag"><span id="dynamicPrice">12500</span> <small>₽</small></div>
+                <p style="color:#4d708a;">включена работа и материалы</p>
+                <button class="order-btn" onclick="openOrderModal()"><i class="fas fa-calculator"></i> Оформить заявку</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Форма заявки -->
+<section id="contact" class="section" style="padding-top: 0;">
+    <div class="request-form" id="requestForm">
+        <h3 style="font-size: 2rem; margin-bottom: 20px; color: #1e3b4f;">Оставьте заявку</h3>
+        <p style="margin-bottom: 25px;">Наш мастер приедет и сделает бесплатные замеры</p>
+        <div class="form-group">
+            <input type="text" id="orderName" placeholder="Ваше ФИО" required>
+        </div>
+        <div class="form-group">
+            <input type="tel" id="orderPhone" placeholder="+7 (___) ___ __ __" required>
+        </div>
+        <div class="form-group">
+            <input type="text" id="orderAddress" placeholder="Адрес (Казань)">
+        </div>
+        <button class="submit-btn" onclick="sendApplication()"><i class="fas fa-paper-plane"></i> Отправить заявку</button>
+    </div>
+</section>
+
+<!-- КОНТАКТЫ -->
+<section id="contact" class="section" style="background: #ffffff;">
+    <h2 class="section-title">Контакты</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 40px; margin-top: 40px;">
+        <!-- левая часть - контактная информация -->
+        <div style="flex: 1; min-width: 280px;">
+            <div style="background: #f0f6fe; border-radius: 32px; padding: 35px; height: 100%;">
+                <h3 style="font-size: 1.8rem; color: #1e3b4f; margin-bottom: 25px;">Свяжитесь с нами</h3>
+                
+                <!-- телефон -->
+                <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 25px;">
+                    <div style="background: #d4a259; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-phone-alt" style="color: white; font-size: 1.3rem;"></i>
+                    </div>
+                    <div>
+                        <div style="font-weight: 600; color: #1e3b4f; margin-bottom: 5px;">Телефон</div>
+                        <a href="tel:+79046630049" style="color: #2b5a7a; text-decoration: none; font-size: 1.2rem; font-weight: 500;">+7 (904) 663-00-49</a>
+                    </div>
+                </div>
+                
+                <!-- VK -->
+                <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 25px;">
+                    <div style="background: #4a76a8; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fab fa-vk" style="color: white; font-size: 1.3rem;"></i>
+                    </div>
+                    <div>
+                        <div style="font-weight: 600; color: #1e3b4f; margin-bottom: 5px;">ВКонтакте</div>
+                        <a href="https://vk.com/lokaal" target="_blank" style="color: #2b5a7a; text-decoration: none; font-size: 1.1rem;">vk.com/lokaal</a>
+                    </div>
+                </div>
+                
+                <!-- адрес -->
+                <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 25px;">
+                    <div style="background: #2b4f6e; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-map-marker-alt" style="color: white; font-size: 1.3rem;"></i>
+                    </div>
+                    <div>
+                        <div style="font-weight: 600; color: #1e3b4f; margin-bottom: 5px;">Адрес</div>
+                        <div style="color: #2b5a7a;">г. Казань, работаем по всему городу</div>
+                    </div>
+                </div>
+                
+                <!-- время работы -->
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <div style="background: #647e94; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-clock" style="color: white; font-size: 1.3rem;"></i>
+                    </div>
+                    <div>
+                        <div style="font-weight: 600; color: #1e3b4f; margin-bottom: 5px;">Режим работы</div>
+                        <div style="color: #2b5a7a;">Ежедневно с 9:00 до 21:00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- правая часть - карта или дополнительная информация -->
+        <div style="flex: 1; min-width: 280px;">
+            <div style="background: #e8f0f9; border-radius: 32px; padding: 35px; height: 100%; display: flex; flex-direction: column; justify-content: center;">
+                <i class="fas fa-envelope" style="font-size: 3rem; color: #d4a259; margin-bottom: 20px;"></i>
+                <h3 style="font-size: 1.5rem; margin-bottom: 15px;">Остались вопросы?</h3>
+                <p style="color: #3e5466; margin-bottom: 25px;">Напишите нам в ВК или позвоните — мы ответим на все вопросы, поможем с выбором и рассчитаем стоимость.</p>
+                <div style="display: flex; gap: 15px;">
+                    <a href="tel:+79046630049" style="background: #d4a259; color: white; padding: 14px 25px; border-radius: 50px; text-decoration: none; font-weight: 600;"><i class="fas fa-phone-alt"></i> Позвонить</a>
+                    <a href="https://vk.com/lokaal" target="_blank" style="background: #2b4f6e; color: white; padding: 14px 25px; border-radius: 50px; text-decoration: none; font-weight: 600;"><i class="fab fa-vk"></i> ВКонтакте</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Футер -->
+<footer class="footer">
+    <p>© 2026 Тимур потолок — натяжные потолки в Казани. Все права защищены.</p>
+    <p style="margin-top: 10px;">Работаем по Казани и РТ · Бесплатный замер</p>
+</footer>
+
+<!-- Модальное окно успеха -->
+<div id="successModal" class="modal">
+    <div class="modal-content">
+        <i class="fas fa-check-circle"></i>
+        <h2>Спасибо!</h2>
+        <p>Ваша заявка отправлена. Мы перезвоним в ближайшее время.</p>
+        <button onclick="closeModal()" style="margin-top: 20px; padding: 12px 30px; background: #d4a259; border: none; border-radius: 40px; color: white; font-weight: bold; cursor: pointer;">Закрыть</button>
+    </div>
+</div>
+
+<script>
+    // Калькулятор цен
+    function updatePrice() {
+        let area = parseFloat(document.getElementById('area').value) || 20;
+        let material = parseFloat(document.getElementById('material').value) || 500;
+        let extra = parseFloat(document.getElementById('extra').value) || 0;
+        let total = area * material + extra;
+        if (total < 3000) total = 3000;
+        document.getElementById('dynamicPrice').innerText = Math.round(total).toLocaleString();
+    }
+
+    document.getElementById('area').addEventListener('input', updatePrice);
+    document.getElementById('material').addEventListener('change', updatePrice);
+    document.getElementById('extra').addEventListener('change', updatePrice);
+    updatePrice();
+
+    // Карусель (горизонтальная прокрутка)
+    function scrollCarousel(direction) {
+        const track = document.getElementById('carouselTrack');
+        const scrollAmount = 320; // примерно ширина слайда + gap
+        track.scrollBy({
+            left: direction * scrollAmount,
+            behavior: 'smooth'
+        });
+    }
+
+    // Заявки (localStorage)
+    let applications = JSON.parse(localStorage.getItem('ceiling_apps')) || [];
+
+    function sendApplication() {
+        let name = document.getElementById('orderName').value.trim();
+        let phone = document.getElementById('orderPhone').value.trim();
+        let address = document.getElementById('orderAddress').value.trim();
+        let price = document.getElementById('dynamicPrice').innerText;
+
+        if (!name || !phone) {
+            alert('Пожалуйста, введите имя и телефон');
+            return;
+        }
+
+        let newApp = {
+            name: name,
+            phone: phone,
+            address: address || 'не указан',
+            price: price,
+            date: new Date().toISOString(),
+            processed: false
+        };
+        applications.push(newApp);
+        localStorage.setItem('ceiling_apps', JSON.stringify(applications));
+
+        document.getElementById('orderName').value = '';
+        document.getElementById('orderPhone').value = '';
+        document.getElementById('orderAddress').value = '';
+
+        document.getElementById('successModal').style.display = 'flex';
+    }
+
+    function openOrderModal() {
+        document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function closeModal() {
+        document.getElementById('successModal').style.display = 'none';
+    }
+
+    // Скролл по ссылкам
+    document.querySelectorAll('.page-link, .nav-links a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const hash = this.getAttribute('href');
+            if (hash && hash !== '#') {
+                const target = document.querySelector(hash);
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+
+    // Добавляем пару тестовых заявок, если пусто (для демо)
+    (function seedTest() {
+        if (applications.length === 0) {
+            let demo = [
+                { name: 'Иванов Петр', phone: '+79991234567', address: 'ул. Баумана 12', price: '34500', date: new Date().toISOString(), processed: false },
+                { name: 'Смирнова Елена', phone: '+78432345678', address: 'пр. Победы 75', price: '28750', date: new Date().toISOString(), processed: false },
+            ];
+            localStorage.setItem('ceiling_apps', JSON.stringify(demo));
+        }
+    })();
+</script>
+
+<script>
+    // Счетчик посетителей
+    (function() {
+        const VISITOR_KEY = 'visitor_stats';
+        let stats = JSON.parse(localStorage.getItem(VISITOR_KEY)) || {
+            totalVisits: 0,
+            todayVisits: 0,
+            lastDate: ''
+        };
+        
+        const today = new Date().toDateString();
+        stats.totalVisits = (stats.totalVisits || 0) + 1;
+        
+        if (stats.lastDate !== today) {
+            stats.todayVisits = 1;
+            stats.lastDate = today;
+        } else {
+            stats.todayVisits = (stats.todayVisits || 0) + 1;
+        }
+        
+        localStorage.setItem(VISITOR_KEY, JSON.stringify(stats));
+    })();
+</script>
+
+</body>
+</html>

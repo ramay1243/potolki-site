@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ панель | Натяжные потолки Казань</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: #0f1a24;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: #1e2f3b;
+            border-radius: 48px;
+            padding: 50px 40px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 30px 50px rgba(0,0,0,0.5);
+            border: 1px solid #3e5f78;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .login-header i {
+            font-size: 3.5rem;
+            color: #d4a259;
+            background: #2b4050;
+            padding: 20px;
+            border-radius: 60px;
+            margin-bottom: 20px;
+        }
+
+        .login-header h2 {
+            color: white;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .login-header p {
+            color: #a0bedb;
+            margin-top: 10px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-group label {
+            display: block;
+            color: #c0d6ec;
+            margin-bottom: 10px;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 18px 22px;
+            background: #11222e;
+            border: 2px solid #2e4a60;
+            border-radius: 50px;
+            font-size: 1rem;
+            color: white;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .input-group input:focus {
+            border-color: #d4a259;
+            box-shadow: 0 0 0 3px rgba(212, 162, 89, 0.3);
+        }
+
+        .login-btn {
+            width: 100%;
+            background: #d4a259;
+            border: none;
+            padding: 18px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #1e2b37;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 15px;
+            box-shadow: 0 8px 18px #a47d42;
+        }
+
+        .login-btn:hover {
+            background: #e5b46b;
+            transform: scale(1.02);
+        }
+
+        .error-message {
+            color: #ff8a7a;
+            text-align: center;
+            margin-top: 20px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .admin-panel {
+            background: #162b38;
+            border-radius: 48px;
+            padding: 40px;
+            width: 100%;
+            max-width: 1400px;
+            box-shadow: 0 30px 60px #00000060;
+            border: 1px solid #366481;
+            display: none;
+            animation: slideUp 0.4s;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #3a637d;
+        }
+
+        .admin-header h1 {
+            color: white;
+            font-size: 2.2rem;
+        }
+
+        .admin-header h1 i {
+            color: #d4a259;
+            margin-right: 15px;
+        }
+
+        .logout-btn {
+            background: #2f4d64;
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 1rem;
+            border: 1px solid #538aa8;
+        }
+
+        .logout-btn:hover {
+            background: #3f627c;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: #1f3e51;
+            padding: 25px;
+            border-radius: 28px;
+            border: 1px solid #437592;
+            transition: 0.2s;
+        }
+
+        .stat-card:hover {
+            background: #23495f;
+            transform: translateY(-3px);
+        }
+
+        .stat-card i {
+            font-size: 2rem;
+            color: #d4a259;
+            margin-bottom: 15px;
+        }
+
+        .stat-card h3 {
+            color: white;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .stat-card p {
+            color: #b0d0ea;
+            margin-top: 5px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-today {
+            border-left: 4px solid #d4a259;
+        }
+
+        .table-container {
+            background: #1a3343;
+            border-radius: 32px;
+            padding: 20px;
+            overflow-x: auto;
+            border: 1px solid #366481;
+            margin-top: 30px;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        .admin-table th {
+            text-align: left;
+            padding: 18px 15px;
+            color: #d4a259;
+            font-weight: 700;
+            border-bottom: 2px solid #d4a259;
+        }
+
+        .admin-table td {
+            padding: 18px 15px;
+            color: #e2f0fa;
+            border-bottom: 1px solid #2f5570;
+        }
+
+        .admin-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .callback-status {
+            background: #1f5f3e;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .callback-status:hover {
+            background: #2d8a57;
+            transform: scale(1.05);
+        }
+
+        .callback-done {
+            background: #4f6d7a;
+            color: #e0eefc;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 40px;
+            color: #97bcd9;
+            font-size: 1.2rem;
+        }
+
+        .footer {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #59839b;
+        }
+
+        .reset-data {
+            background: #3f2f2f;
+            color: #f0b0a0;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+
+        .reset-data:hover {
+            background: #5a3e3e;
+        }
+
+        .visitor-badge {
+            background: #2b4f6e;
+            padding: 8px 16px;
+            border-radius: 30px;
+            color: #d4a259;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Форма входа -->
+<div class="login-container" id="loginForm">
+    <div class="login-header">
+        <i class="fas fa-lock"></i>
+        <h2>Вход в админ-панель</h2>
+        <p>Натяжные потолки • Казань</p>
+    </div>
+    <div class="input-group">
+        <label><i class="fas fa-user"></i> Логин</label>
+        <input type="text" id="username" placeholder="Введите логин" value="admin">
+    </div>
+    <div class="input-group">
+        <label><i class="fas fa-key"></i> Пароль</label>
+        <input type="password" id="password" placeholder="Введите пароль" value="potolok2024">
+    </div>
+    <button class="login-btn" onclick="login()"><i class="fas fa-sign-in-alt"></i> Войти</button>
+    <div class="error-message" id="loginError">Неверный логин или пароль</div>
+</div>
+
+<!-- Админ панель -->
+<div class="admin-panel" id="adminPanel">
+    <div class="admin-header">
+        <h1><i class="fas fa-chart-line"></i> Управление заявками</h1>
+        <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Выйти</button>
+    </div>
+
+    <!-- Статистика -->
+    <div class="stats">
+        <div class="stat-card">
+            <i class="fas fa-users"></i>
+            <h3 id="totalVisitors">0</h3>
+            <p>Всего посетителей</p>
+        </div>
+        <div class="stat-card stat-today">
+            <i class="fas fa-calendar-day"></i>
+            <h3 id="todayVisitors">0</h3>
+            <p>Сегодня новых</p>
+        </div>
+        <div class="stat-card">
+            <i class="fas fa-file-alt"></i>
+            <h3 id="totalApps">0</h3>
+            <p>Всего заявок</p>
+        </div>
+        <div class="stat-card">
+            <i class="fas fa-phone-alt"></i>
+            <h3 id="newApps">0</h3>
+            <p>Новых заявок</p>
+        </div>
+        <div class="stat-card">
+            <i class="fas fa-ruble-sign"></i>
+            <h3 id="avgPrice">0</h3>
+            <p>Средний чек</p>
+        </div>
+    </div>
+
+    <!-- Таблица заявок -->
+    <div class="table-container">
+        <table class="admin-table" id="applicationsTable">
+            <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>ФИО</th>
+                    <th>Телефон</th>
+                    <th>Адрес</th>
+                    <th>Сумма, ₽</th>
+                    <th>Статус</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <!-- заполняется js -->
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer">
+        <div class="visitor-badge">
+            <i class="fas fa-eye"></i> Посещений сегодня: <span id="activeToday">0</span>
+        </div>
+        <button class="reset-data" onclick="resetAllData()"><i class="fas fa-undo-alt"></i> Сбросить все данные</button>
+    </div>
+</div>
+
+<script>
+    // Ключи для хранения
+    const STORAGE_KEY = 'ceiling_apps';
+    const VISITOR_KEY = 'visitor_stats';
+
+    // Креды
+    const VALID_USERNAME = 'admin';
+    const VALID_PASSWORD = 'potolok2024';
+
+    // ========== УДАЛЕНИЕ ТЕСТОВЫХ ДАННЫХ ==========
+    function removeTestData() {
+        let apps = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        
+        const testNames = [
+            'Смирнова Елена',
+            'Иванов Петр Сергеевич', 
+            'Равиль Хакимов',
+            'цпкфе64ц',
+            'руфкпфер64',
+            'тест',
+            'Тест'
+        ];
+        
+        let realApps = apps.filter(app => {
+            if (app.name && testNames.includes(app.name)) {
+                return false;
+            }
+            if (app.name && app.name.length < 3) {
+                return false;
+            }
+            return true;
+        });
+        
+        if (realApps.length !== apps.length) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(realApps));
+            console.log('🧹 Тестовые заявки удалены');
+        }
+    }
+    // ============================================
+
+    // Инициализация статистики посетителей
+    function initVisitorStats() {
+        let stats = localStorage.getItem(VISITOR_KEY);
+        if (!stats) {
+            stats = {
+                totalVisits: 0,
+                todayVisits: 0,
+                lastDate: new Date().toDateString()
+            };
+            localStorage.setItem(VISITOR_KEY, JSON.stringify(stats));
+        }
+    }
+
+    // Получить статистику посетителей
+    function getVisitorStats() {
+        let stats = JSON.parse(localStorage.getItem(VISITOR_KEY));
+        if (!stats) {
+            stats = {
+                totalVisits: 0,
+                todayVisits: 0,
+                lastDate: new Date().toDateString()
+            };
+        }
+        return stats;
+    }
+
+    // Загружаем статистику
+    function loadVisitorStats() {
+        let stats = getVisitorStats();
+        document.getElementById('totalVisitors').innerText = stats.totalVisits || 0;
+        document.getElementById('todayVisitors').innerText = stats.todayVisits || 0;
+        document.getElementById('activeToday').innerText = stats.todayVisits || 0;
+    }
+
+    // Проверка сессии
+    window.onload = function() {
+        initVisitorStats();
+        removeTestData();
+        
+        if (sessionStorage.getItem('admin_logged') === 'true') {
+            showAdminPanel();
+        } else {
+            document.getElementById('loginForm').style.display = 'flex';
+            document.getElementById('adminPanel').style.display = 'none';
+        }
+        loadApplications();
+        loadVisitorStats();
+    };
+
+    // Вход
+    function login() {
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value.trim();
+
+        if (username === VALID_USERNAME && password === VALID_PASSWORD) {
+            sessionStorage.setItem('admin_logged', 'true');
+            showAdminPanel();
+            document.getElementById('loginError').style.display = 'none';
+        } else {
+            document.getElementById('loginError').style.display = 'block';
+        }
+    }
+
+    // Показать админ-панель
+    function showAdminPanel() {
+        document.getElementById('loginForm').style.display = 'none';
+        document.getElementById('adminPanel').style.display = 'block';
+        loadApplications();
+        loadVisitorStats();
+    }
+
+    // Выход
+    function logout() {
+        sessionStorage.removeItem('admin_logged');
+        document.getElementById('loginForm').style.display = 'flex';
+        document.getElementById('adminPanel').style.display = 'none';
+        document.getElementById('username').value = 'admin';
+        document.getElementById('password').value = 'potolok2024';
+    }
+
+    // ===== ИСПРАВЛЕННАЯ ЗАГРУЗКА ЗАЯВОК (БЕЗ ОШИБКИ "НЕ ЧИСЛО") =====
+    function loadApplications() {
+        let apps = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        
+        // Обновляем статистику заявок
+        document.getElementById('totalApps').innerText = apps.length;
+
+        let newCount = apps.filter(app => !app.processed).length;
+        document.getElementById('newApps').innerText = newCount;
+
+        // ПРАВИЛЬНЫЙ РАСЧЕТ СРЕДНЕГО ЧЕКА (с защитой от NaN)
+        if (apps.length > 0) {
+            let sum = 0;
+            let validPrices = 0;
+            
+            apps.forEach(app => {
+                // Если цена есть и она не пустая
+                if (app.price) {
+                    // Очищаем цену от всех символов, кроме цифр
+                    let priceStr = String(app.price);
+                    let cleanPrice = priceStr.replace(/[^\d]/g, '');
+                    
+                    // Преобразуем в число, если получилось - используем
+                    let price = parseInt(cleanPrice);
+                    
+                    // Проверяем, что это действительно число и оно больше 0
+                    if (!isNaN(price) && price > 0) {
+                        sum += price;
+                        validPrices++;
+                    }
+                }
+            });
+            
+            // Если есть валидные цены - считаем среднее
+            if (validPrices > 0) {
+                let avg = Math.round(sum / validPrices);
+                document.getElementById('avgPrice').innerText = avg.toLocaleString('ru-RU');
+            } else {
+                document.getElementById('avgPrice').innerText = '0';
+            }
+        } else {
+            document.getElementById('avgPrice').innerText = '0';
+        }
+
+        // Отрисовка таблицы
+        const tbody = document.getElementById('tableBody');
+        if (apps.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="6" class="empty-message">Заявок пока нет. Отправьте заявку с главного сайта.</td></tr>`;
+            return;
+        }
+
+        // Сортировка по дате
+        apps.sort((a, b) => {
+            if (a.date && b.date) return new Date(b.date) - new Date(a.date);
+            return 0;
+        });
+
+        let html = '';
+        apps.forEach((app, index) => {
+            let dateStr = app.date ? new Date(app.date).toLocaleString('ru-RU', {
+                day: '2-digit', 
+                month: '2-digit', 
+                hour: '2-digit', 
+                minute: '2-digit'
+            }) : '—';
+            
+            let statusClass = app.processed ? 'callback-done' : '';
+            let statusText = app.processed ? 'Обработано' : 'Новая';
+            
+            // Безопасное форматирование цены (с защитой от undefined)
+            let displayPrice = '—';
+            if (app.price) {
+                // Очищаем от символов и проверяем
+                let cleanPrice = String(app.price).replace(/[^\d]/g, '');
+                let priceNum = parseInt(cleanPrice);
+                if (!isNaN(priceNum) && priceNum > 0) {
+                    displayPrice = priceNum.toLocaleString('ru-RU');
+                }
+            }
+            
+            html += `<tr>
+                <td>${dateStr}</td>
+                <td><strong>${escapeHtml(app.name) || '—'}</strong></td>
+                <td>${escapeHtml(app.phone) || '—'}</td>
+                <td>${escapeHtml(app.address) || '—'}</td>
+                <td>${displayPrice}</td>
+                <td>
+                    <button class="callback-status ${statusClass}" onclick="toggleStatus(${index})">
+                        <i class="fas fa-phone-alt"></i> ${statusText}
+                    </button>
+                </td>
+            </tr>`;
+        });
+        tbody.innerHTML = html;
+    }
+
+    // Переключение статуса
+    function toggleStatus(index) {
+        let apps = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        if (apps[index]) {
+            apps[index].processed = !apps[index].processed;
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(apps));
+            loadApplications();
+        }
+    }
+
+    // Экранирование
+    function escapeHtml(unsafe) {
+        if (!unsafe) return unsafe;
+        return unsafe
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+    // Сброс данных
+    function resetAllData() {
+        if (confirm('ВНИМАНИЕ! Это удалит ВСЕ заявки и статистику посетителей. Продолжить?')) {
+            localStorage.removeItem(STORAGE_KEY);
+            localStorage.removeItem(VISITOR_KEY);
+            initVisitorStats();
+            loadApplications();
+            loadVisitorStats();
+            alert('Все данные удалены');
+        }
+    }
+
+    // Обновление каждые 10 секунд
+    setInterval(() => {
+        if (sessionStorage.getItem('admin_logged') === 'true') {
+            loadApplications();
+            loadVisitorStats();
+        }
+    }, 10000);
+</script>
+</body>
+</html>
