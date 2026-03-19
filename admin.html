@@ -415,7 +415,8 @@
         
         const testNames = [
             'Смирнова Елена',
-            'Иванов Петр Сергеевич', 
+            'Иванов Петр', 
+            'Иванов Петр Сергеевич',
             'Равиль Хакимов',
             'цпкфе64ц',
             'руфкпфер64',
@@ -520,32 +521,25 @@
         document.getElementById('password').value = 'potolok2024';
     }
 
-    // ===== ИСПРАВЛЕННАЯ ЗАГРУЗКА ЗАЯВОК (БЕЗ ОШИБКИ "НЕ ЧИСЛО") =====
+    // Загрузка ТОЛЬКО РЕАЛЬНЫХ заявок
     function loadApplications() {
         let apps = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
         
-        // Обновляем статистику заявок
         document.getElementById('totalApps').innerText = apps.length;
-
         let newCount = apps.filter(app => !app.processed).length;
         document.getElementById('newApps').innerText = newCount;
 
-        // ПРАВИЛЬНЫЙ РАСЧЕТ СРЕДНЕГО ЧЕКА (с защитой от NaN)
+        // Расчет среднего чека
         if (apps.length > 0) {
             let sum = 0;
             let validPrices = 0;
             
             apps.forEach(app => {
-                // Если цена есть и она не пустая
                 if (app.price) {
-                    // Очищаем цену от всех символов, кроме цифр
                     let priceStr = String(app.price);
                     let cleanPrice = priceStr.replace(/[^\d]/g, '');
-                    
-                    // Преобразуем в число, если получилось - используем
                     let price = parseInt(cleanPrice);
                     
-                    // Проверяем, что это действительно число и оно больше 0
                     if (!isNaN(price) && price > 0) {
                         sum += price;
                         validPrices++;
@@ -553,7 +547,6 @@
                 }
             });
             
-            // Если есть валидные цены - считаем среднее
             if (validPrices > 0) {
                 let avg = Math.round(sum / validPrices);
                 document.getElementById('avgPrice').innerText = avg.toLocaleString('ru-RU');
@@ -571,7 +564,6 @@
             return;
         }
 
-        // Сортировка по дате
         apps.sort((a, b) => {
             if (a.date && b.date) return new Date(b.date) - new Date(a.date);
             return 0;
@@ -589,10 +581,8 @@
             let statusClass = app.processed ? 'callback-done' : '';
             let statusText = app.processed ? 'Обработано' : 'Новая';
             
-            // Безопасное форматирование цены (с защитой от undefined)
             let displayPrice = '—';
             if (app.price) {
-                // Очищаем от символов и проверяем
                 let cleanPrice = String(app.price).replace(/[^\d]/g, '');
                 let priceNum = parseInt(cleanPrice);
                 if (!isNaN(priceNum) && priceNum > 0) {
